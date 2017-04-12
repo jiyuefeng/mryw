@@ -6,12 +6,14 @@ import {ActivityListComponent} from "./activity-list.component";
 import {ActivityStatusPipe} from "../shared/pipes/activity-status.pipe";
 import {Ng2PaginationModule} from "ng2-pagination";
 import {HeaderModule} from "../shared/header/header.module";
+import { Ng2DatetimePickerModule } from 'ng2-datetime-picker';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     Ng2PaginationModule,
+    Ng2DatetimePickerModule,
     ActivityRoutingModule,
     HeaderModule
   ],

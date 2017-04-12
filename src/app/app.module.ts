@@ -3,7 +3,6 @@ import {NgModule, ErrorHandler} from "@angular/core";
 import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 import {ToastyModule} from "ng2-toasty";
-import {Ng2PaginationModule} from "ng2-pagination";
 import {SlimLoadingBarModule} from "ng2-slim-loading-bar";
 import {AppRoutingModule} from "./app-routing.module";
 import {AppComponent} from "./app.component";
@@ -27,7 +26,7 @@ import {ActRecordModule} from "./act-records/act-record.module";
     HttpModule,
     SlimLoadingBarModule.forRoot(),
     ToastyModule.forRoot(),
-    Ng2PaginationModule,
+
     AppRoutingModule,
 
     LoginModule,

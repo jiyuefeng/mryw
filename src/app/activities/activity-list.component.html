@@ -71,11 +71,13 @@
               </li>
               <li>
                 <p class="nfd_list_name">活动时间</p>
-                <input type="text" name="startTime" required [(ngModel)]="activity.startTime" #startTime="ngModel"
-                       placeholder="" style="width:230px">
+                <input type="text" name="startTime" required [ngModel]="activity.startTime | date: 'yyyy-MM-dd HH:mm:ss'" (ngModelChange)="activity.startTime=$event" #startTime="ngModel"
+                       ng2-datetime-picker date-format="YYYY-MM-DD HH:mm:ss"
+                       placeholder="" style="width:230px" readonly>
                 ---
-                <input type="text" name="endTime" required [(ngModel)]="activity.endTime" #endTime="ngModel"
-                       placeholder="" style="width:230px">
+                <input type="text" name="endTime" required [ngModel]="activity.endTime | date: 'yyyy-MM-dd HH:mm:ss'" (ngModelChange)="activity.endTime=$event" #endTime="ngModel"
+                       ng2-datetime-picker date-format="YYYY-MM-DD HH:mm:ss"
+                       placeholder="" style="width:230px" readonly>
                 <div [hidden]="startTime.valid || startTime.pristine">活动开始时间必填</div>
                 <div [hidden]="endTime.valid || endTime.pristine">活动结束时间必填</div>
               </li>
@@ -175,13 +177,13 @@
                 <p class="nfd_list_name">详情链接</p>
                 <input type="text" name="detailUrl" required [(ngModel)]="activity.detailUrl" #detailUrl="ngModel"
                        placeholder="">
-                <div [hidden]="detailUrl.valid || detailUrl.pristine">物品原价必填</div>
+                <div [hidden]="detailUrl.valid || detailUrl.pristine">详情链接必填</div>
               </li>
               <li>
                 <p class="nfd_list_name">活动说明</p>
                 <textarea name="remark" required [(ngModel)]="activity.remark" #remark="ngModel" placeholder=""
                       style="width: 550px"></textarea>
-                <div [hidden]="remark.valid || remark.pristine">物品原价必填</div>
+                <div [hidden]="remark.valid || remark.pristine">活动说明必填</div>
               </li>
             </ul>
           </div>
@@ -205,11 +207,13 @@
               </li>
               <li>
                 <p class="nfd_list_name">活动时间</p>
-                <input type="text" name="startTime" required [(ngModel)]="activity.startTime" #startTime="ngModel"
-                       placeholder="" style="width:230px">
+                <input type="text" name="startTime" required [ngModel]="activity.startTime | date: 'yyyy-MM-dd HH:mm:ss'" (ngModelChange)="activity.startTime=$event" #startTime="ngModel"
+                       ng2-datetime-picker date-format="YYYY-MM-DD HH:mm:ss"
+                       placeholder="" style="width:230px" readonly>
                 ---
-                <input type="text" name="endTime" required [(ngModel)]="activity.endTime" #endTime="ngModel"
-                       placeholder="" style="width:230px">
+                <input type="text" name="endTime" required [ngModel]="activity.endTime | date: 'yyyy-MM-dd HH:mm:ss'" (ngModelChange)="activity.endTime=$event" #endTime="ngModel"
+                       ng2-datetime-picker date-format="YYYY-MM-DD HH:mm:ss"
+                       placeholder="" style="width:230px" readonly>
                 <div [hidden]="startTime.valid || startTime.pristine">活动开始时间必填</div>
                 <div [hidden]="endTime.valid || endTime.pristine">活动结束时间必填</div>
               </li>
@@ -223,7 +227,7 @@
                 <p class="nfd_list_name">物品简介</p>
                 <input type="text" name="intro" required [(ngModel)]="activity.intro" #intro="ngModel"
                        placeholder="">
-                <div [hidden]="intro.valid || intro.pristine">物品原价必填</div>
+                <div [hidden]="intro.valid || intro.pristine">物品简介必填</div>
               </li>
               <li [hidden]="picture1Mode != 1">
                 <p class="nfd_list_name">轮播图</p>
@@ -309,13 +313,13 @@
                 <p class="nfd_list_name">详情链接</p>
                 <input type="text" name="detailUrl" required [(ngModel)]="activity.detailUrl" #detailUrl="ngModel"
                        placeholder="">
-                <div [hidden]="detailUrl.valid || detailUrl.pristine">物品原价必填</div>
+                <div [hidden]="detailUrl.valid || detailUrl.pristine">详情链接必填</div>
               </li>
               <li>
                 <p class="nfd_list_name">活动说明</p>
                 <textarea name="remark" required [(ngModel)]="activity.remark" #remark="ngModel" placeholder=""
                           style="width: 550px"></textarea>
-                <div [hidden]="remark.valid || remark.pristine">物品原价必填</div>
+                <div [hidden]="remark.valid || remark.pristine">活动说明必填</div>
               </li>
             </ul>
           </div>
