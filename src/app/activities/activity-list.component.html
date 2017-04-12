@@ -1,0 +1,375 @@
+<div class="epay">
+  <my-header></my-header>
+  <div class="epay_con clearfix">
+    <!--<my-profile-left-menu></my-profile-left-menu>-->
+    <div class="epay_right">
+      <div class="pannel">
+        <p class="common_title">活动配置列表</p>
+        <div class="wechat_pay">
+          <p class="add_account" (click)="openCreateDialog()"><span></span>发布活动</p>
+        </div>
+        <div class="order_search clearfix">
+          <p>
+            <input type="text" [(ngModel)]="searchParams.keyword" placeholder="搜索活动标题" size="80"/>
+          </p>
+          <p class="order_search_btn" (click)="search(1)">查询</p>
+        </div>
+        <table class="wechat_pay_table">
+          <tbody>
+          <tr class="first_line">
+            <td>状态</td>
+            <td>活动ID</td>
+            <td>活动标题</td>
+            <td>活动时间</td>
+            <td>报名人数</td>
+            <td>最后操作时间</td>
+            <td>最后操作人</td>
+            <td>操作</td>
+          </tr>
+          <tr
+            *ngFor="let act of activities | paginate: { id: 'pagination', itemsPerPage: pageSize, currentPage: pageNum, totalItems: total}">
+            <td>{{act.status | activityStatus }}</td>
+            <td>{{act.id}}</td>
+            <td><a href="javascript:void(0);" (click)="openDetailDialog(act)">{{act.title}}</a></td>
+            <td>{{act.startTime | date: 'yyyy-MM-dd HH:mm:ss'}} - {{act.endTime | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{act.recordCount}}</td>
+            <td>{{act.lastModifyTime | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{act.lastModifier}}</td>
+            <td>
+              <a href="javascript:void(0);" (click)="openUpdateDialog(act)">修改</a>
+              <a *ngIf="act.status == 'NOT_AUDIT'" href="javascript:void(0);" (click)="audit(act)">审核</a>
+              <a *ngIf="act.status == 'AUDITED' || act.status == 'ONLINE'" href="javascript:void(0);" (click)="cancelAudit(act)">取消审核</a>
+              <a *ngIf="act.status == 'OFFLINE'" href="javascript:void(0);" routerLink="/activities/{{act.id}}/records">查看报名</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="page_wrap">
+          <pagination-controls id="pagination"
+                               (pageChange)="search($event)"
+                               maxSize="9"
+                               directionLinks="true"
+                               autoHide="true"
+                               previousLabel="上一页"
+                               nextLabel="下一页">
+          </pagination-controls>
+        </div>
+      </div>
+      <div [hidden]="!(showAdd || showUpdate)" class="dialog_mask" (click)="cancel()"></div>
+      <!--- 新增配置 -->
+      <div *ngIf="showAdd" class="notfull_dialog nfd_large">
+        <form (ngSubmit)="createActivity()" #activityCreateForm="ngForm">
+          <p class="nfd_title">发布活动</p>
+          <div class="nfd_body">
+            <p class="nfd_tip"></p>
+            <ul class="nfd_list">
+              <li>
+                <p class="nfd_list_name">活动标题</p>
+                <input type="text" name="title" required [(ngModel)]="activity.title" #title="ngModel"
+                       placeholder="">
+                <div [hidden]="title.valid || title.pristine">活动标题必填</div>
+              </li>
+              <li>
+                <p class="nfd_list_name">活动时间</p>
+                <input type="text" name="startTime" required [(ngModel)]="activity.startTime" #startTime="ngModel"
+                       placeholder="" style="width:230px">
+                ---
+                <input type="text" name="endTime" required [(ngModel)]="activity.endTime" #endTime="ngModel"
+                       placeholder="" style="width:230px">
+                <div [hidden]="startTime.valid || startTime.pristine">活动开始时间必填</div>
+                <div [hidden]="endTime.valid || endTime.pristine">活动结束时间必填</div>
+              </li>
+              <li>
+                <p class="nfd_list_name">物品原价</p>
+                <input type="number" name="price" required [ngModel]="activity.price/100" (ngModelChange)="activity.price=$event*100"  #price="ngModel"
+                       placeholder="" style="width:150px"> 元
+                <div [hidden]="price.valid || price.pristine">物品原价必填</div>
+              </li>
+              <li>
+                <p class="nfd_list_name">物品简介</p>
+                <input type="text" name="intro" required [(ngModel)]="activity.intro" #intro="ngModel"
+                       placeholder="">
+                <div [hidden]="intro.valid || intro.pristine">物品原价必填</div>
+              </li>
+              <li [hidden]="picture1Mode != 1">
+                <p class="nfd_list_name">轮播图</p>
+                <div class="file_up clearfix">
+                  <img src="{{activity.pictures[0] ? activity.pictures[0]
+                                        : '/assets/images/logo_up.png'}}" class="file_up_img">
+                  <input type="file" class="file" accept="image/*" (change)="upload($event, 0)">
+
+                  <a href="javacript:void(0);" (click)="picture1Mode = 2" > 地址模式</a>
+                </div>
+              </li>
+              <li [hidden]="picture1Mode == 1">
+                <p class="nfd_list_name">轮播图</p>
+                <input type="text" name="picture1" required [(ngModel)]="activity.pictures[0]" #picture1="ngModel"
+                       placeholder="">
+                <div [hidden]="picture1.valid || picture1.pristine">轮播图必填</div>
+                <a href="javacript:void(0);" (click)="picture1Mode = 1"> 上传模式</a>
+              </li>
+              <li [hidden]="picture2Mode != 1">
+                <p class="nfd_list_name"></p>
+                <div class="file_up clearfix">
+                  <img src="{{activity.pictures[1] ? activity.pictures[1]
+                                        : '/assets/images/logo_up.png'}}" class="file_up_img">
+                  <input type="file" class="file" accept="image/*" (change)="upload($event, 1)">
+
+                  <a href="javacript:void(0);" (click)="picture2Mode = 2" > 地址模式</a>
+                </div>
+              </li>
+              <li [hidden]="picture2Mode == 1">
+                <p class="nfd_list_name"></p>
+                <input type="text" name="picture2" required [(ngModel)]="activity.pictures[1]" #picture2="ngModel"
+                       placeholder="">
+                <a href="javacript:void(0);" (click)="picture2Mode = 1"> 上传模式</a>
+              </li>
+              <li [hidden]="picture3Mode != 1">
+                <p class="nfd_list_name"></p>
+                <div class="file_up clearfix">
+                  <img src="{{activity.pictures[2] ? activity.pictures[2]
+                                        : '/assets/images/logo_up.png'}}" class="file_up_img">
+                  <input type="file" class="file" accept="image/*" (change)="upload($event, 2)">
+
+                  <a href="javacript:void(0);" (click)="picture3Mode = 2" > 地址模式</a>
+                </div>
+              </li>
+              <li [hidden]="picture3Mode == 1">
+                <p class="nfd_list_name"></p>
+                <input type="text" name="picture3" required [(ngModel)]="activity.pictures[2]" #picture3="ngModel"
+                       placeholder="">
+                <a href="javacript:void(0);" (click)="picture3Mode = 1"> 上传模式</a>
+              </li>
+              <li [hidden]="picture4Mode != 1">
+                <p class="nfd_list_name"></p>
+                <div class="file_up clearfix">
+                  <img src="{{activity.pictures[3] ? activity.pictures[3]
+                                        : '/assets/images/logo_up.png'}}" class="file_up_img">
+                  <input type="file" class="file" accept="image/*" (change)="upload($event, 3)">
+                  <a href="javacript:void(0);" (click)="picture4Mode = 2" > 地址模式</a>
+                </div>
+              </li>
+              <li [hidden]="picture4Mode == 1">
+                <p class="nfd_list_name"></p>
+                <input type="text" name="picture4" required [(ngModel)]="activity.pictures[3]" #picture4="ngModel"
+                       placeholder="">
+                <a href="javacript:void(0);" (click)="picture4Mode = 1"> 上传模式</a>
+              </li>
+              <li [hidden]="picture5Mode != 1">
+                <p class="nfd_list_name"></p>
+                <div class="file_up clearfix">
+                  <img src="{{activity.pictures[4] ? activity.pictures[4]
+                                        : '/assets/images/logo_up.png'}}" class="file_up_img">
+                  <input type="file" class="file" accept="image/*" (change)="upload($event, 4)">
+
+                  <a href="javacript:void(0);" (click)="picture5Mode = 2" > 地址模式</a>
+                </div>
+              </li>
+              <li [hidden]="picture5Mode == 1">
+                <p class="nfd_list_name"></p>
+                <input type="text" name="picture5" required [(ngModel)]="activity.pictures[4]" #picture5="ngModel"
+                       placeholder="">
+                <a href="javacript:void(0);" (click)="picture5Mode = 1"> 上传模式</a>
+              </li>
+              <li>
+                <p class="nfd_list_name">详情链接</p>
+                <input type="text" name="detailUrl" required [(ngModel)]="activity.detailUrl" #detailUrl="ngModel"
+                       placeholder="">
+                <div [hidden]="detailUrl.valid || detailUrl.pristine">物品原价必填</div>
+              </li>
+              <li>
+                <p class="nfd_list_name">活动说明</p>
+                <textarea name="remark" required [(ngModel)]="activity.remark" #remark="ngModel" placeholder=""
+                      style="width: 550px"></textarea>
+                <div [hidden]="remark.valid || remark.pristine">物品原价必填</div>
+              </li>
+            </ul>
+          </div>
+          <div class="nfd_footer">
+            <button type="submit" class="fill_btn" [disabled]="!activityCreateForm.form.valid">保存</button>
+          </div>
+        </form>
+      </div>
+      <!--- 修改配置 -->
+      <div *ngIf="showUpdate" class="notfull_dialog nfd_large">
+        <form (ngSubmit)="updateActivity()" #activityUpdateForm="ngForm">
+          <p class="nfd_title">更新活动</p>
+          <div class="nfd_body">
+            <p class="nfd_tip"></p>
+            <ul class="nfd_list">
+              <li>
+                <p class="nfd_list_name">活动标题</p>
+                <input type="text" name="title" required [(ngModel)]="activity.title" #title="ngModel"
+                       placeholder="">
+                <div [hidden]="title.valid || title.pristine">活动标题必填</div>
+              </li>
+              <li>
+                <p class="nfd_list_name">活动时间</p>
+                <input type="text" name="startTime" required [(ngModel)]="activity.startTime" #startTime="ngModel"
+                       placeholder="" style="width:230px">
+                ---
+                <input type="text" name="endTime" required [(ngModel)]="activity.endTime" #endTime="ngModel"
+                       placeholder="" style="width:230px">
+                <div [hidden]="startTime.valid || startTime.pristine">活动开始时间必填</div>
+                <div [hidden]="endTime.valid || endTime.pristine">活动结束时间必填</div>
+              </li>
+              <li>
+                <p class="nfd_list_name">物品原价</p>
+                <input type="number" name="price" required [ngModel]="activity.price/100" (ngModelChange)="activity.price=$event*100"  #price="ngModel"
+                       placeholder="" style="width:150px"> 元
+                <div [hidden]="price.valid || price.pristine">物品原价必填</div>
+              </li>
+              <li>
+                <p class="nfd_list_name">物品简介</p>
+                <input type="text" name="intro" required [(ngModel)]="activity.intro" #intro="ngModel"
+                       placeholder="">
+                <div [hidden]="intro.valid || intro.pristine">物品原价必填</div>
+              </li>
+              <li [hidden]="picture1Mode != 1">
+                <p class="nfd_list_name">轮播图</p>
+                <div class="file_up clearfix">
+                  <img src="{{activity.pictures[0] ? activity.pictures[0]
+                                        : '/assets/images/logo_up.png'}}" class="file_up_img">
+                  <input type="file" class="file" accept="image/*" (change)="upload($event, 0)">
+
+                  <a href="javacript:void(0);" (click)="picture1Mode = 2" > 地址模式</a>
+                </div>
+              </li>
+              <li [hidden]="picture1Mode == 1">
+                <p class="nfd_list_name">轮播图</p>
+                <input type="text" name="picture1" required [(ngModel)]="activity.pictures[0]" #picture1="ngModel"
+                       placeholder="">
+                <div [hidden]="picture1.valid || picture1.pristine">轮播图必填</div>
+                <a href="javacript:void(0);" (click)="picture1Mode = 1"> 上传模式</a>
+              </li>
+              <li [hidden]="picture2Mode != 1">
+                <p class="nfd_list_name"></p>
+                <div class="file_up clearfix">
+                  <img src="{{activity.pictures[1] ? activity.pictures[1]
+                                        : '/assets/images/logo_up.png'}}" class="file_up_img">
+                  <input type="file" class="file" accept="image/*" (change)="upload($event, 1)">
+
+                  <a href="javacript:void(0);" (click)="picture2Mode = 2" > 地址模式</a>
+                </div>
+              </li>
+              <li [hidden]="picture2Mode == 1">
+                <p class="nfd_list_name"></p>
+                <input type="text" name="picture2" required [(ngModel)]="activity.pictures[1]" #picture2="ngModel"
+                       placeholder="">
+                <a href="javacript:void(0);" (click)="picture2Mode = 1"> 上传模式</a>
+              </li>
+              <li [hidden]="picture3Mode != 1">
+                <p class="nfd_list_name"></p>
+                <div class="file_up clearfix">
+                  <img src="{{activity.pictures[2] ? activity.pictures[2]
+                                        : '/assets/images/logo_up.png'}}" class="file_up_img">
+                  <input type="file" class="file" accept="image/*" (change)="upload($event, 2)">
+
+                  <a href="javacript:void(0);" (click)="picture3Mode = 2" > 地址模式</a>
+                </div>
+              </li>
+              <li [hidden]="picture3Mode == 1">
+                <p class="nfd_list_name"></p>
+                <input type="text" name="picture3" required [(ngModel)]="activity.pictures[2]" #picture3="ngModel"
+                       placeholder="">
+                <a href="javacript:void(0);" (click)="picture3Mode = 1"> 上传模式</a>
+              </li>
+              <li [hidden]="picture4Mode != 1">
+                <p class="nfd_list_name"></p>
+                <div class="file_up clearfix">
+                  <img src="{{activity.pictures[3] ? activity.pictures[3]
+                                        : '/assets/images/logo_up.png'}}" class="file_up_img">
+                  <input type="file" class="file" accept="image/*" (change)="upload($event, 3)">
+                  <a href="javacript:void(0);" (click)="picture4Mode = 2" > 地址模式</a>
+                </div>
+              </li>
+              <li [hidden]="picture4Mode == 1">
+                <p class="nfd_list_name"></p>
+                <input type="text" name="picture4" required [(ngModel)]="activity.pictures[3]" #picture4="ngModel"
+                       placeholder="">
+                <a href="javacript:void(0);" (click)="picture4Mode = 1"> 上传模式</a>
+              </li>
+              <li [hidden]="picture5Mode != 1">
+                <p class="nfd_list_name"></p>
+                <div class="file_up clearfix">
+                  <img src="{{activity.pictures[4] ? activity.pictures[4]
+                                        : '/assets/images/logo_up.png'}}" class="file_up_img">
+                  <input type="file" class="file" accept="image/*" (change)="upload($event, 4)">
+
+                  <a href="javacript:void(0);" (click)="picture5Mode = 2" > 地址模式</a>
+                </div>
+              </li>
+              <li [hidden]="picture5Mode == 1">
+                <p class="nfd_list_name"></p>
+                <input type="text" name="picture5" required [(ngModel)]="activity.pictures[4]" #picture5="ngModel"
+                       placeholder="">
+                <a href="javacript:void(0);" (click)="picture5Mode = 1"> 上传模式</a>
+              </li>
+              <li>
+                <p class="nfd_list_name">详情链接</p>
+                <input type="text" name="detailUrl" required [(ngModel)]="activity.detailUrl" #detailUrl="ngModel"
+                       placeholder="">
+                <div [hidden]="detailUrl.valid || detailUrl.pristine">物品原价必填</div>
+              </li>
+              <li>
+                <p class="nfd_list_name">活动说明</p>
+                <textarea name="remark" required [(ngModel)]="activity.remark" #remark="ngModel" placeholder=""
+                          style="width: 550px"></textarea>
+                <div [hidden]="remark.valid || remark.pristine">物品原价必填</div>
+              </li>
+            </ul>
+          </div>
+          <div class="nfd_footer">
+            <button type="submit" class="fill_btn" [disabled]="!activityUpdateForm.form.valid">保存</button>
+          </div>
+        </form>
+      </div>
+      <!-- 活动配置详情 -->
+     <div class="full-dialog" [hidden]="!showDetail">
+        <div class="fd-header">
+          <span>活动配置详情</span>
+          <span class="fd-close" (click)="closeDetailDialog()"></span>
+        </div>
+        <div class="fd-body">
+          <ul class="common_list">
+            <li>
+              <p class="list_name">活动标题</p>
+              <p class="list_value">{{activity.title}}</p>
+            </li>
+            <li>
+              <p class="list_name">活动时间</p>
+              <p class="list_value">{{activity.startTime | date: 'yyyy-MM-dd HH:mm:ss'}} - {{activity.endTime | date:
+                'yyyy-MM-dd HH:mm:ss'}}</p>
+            </li>
+            <li>
+              <p class="list_name">物品原价</p>
+              <p class="list_value">{{activity.price/100}}元</p>
+            </li>
+            <li>
+              <p class="list_name">物品简介</p>
+              <p class="list_value">{{activity.intro}}</p>
+            </li>
+            <li>
+              <p class="list_name">轮播图</p>
+              <p class="list_value">
+                <img src="{{activity.pictures[0]}}" width="50" height="50">
+                <img src="{{activity.pictures[1]}}" width="50" height="50">
+                <img src="{{activity.pictures[2]}}" width="50" height="50">
+                <img src="{{activity.pictures[3]}}" width="50" height="50">
+                <img src="{{activity.pictures[4]}}" width="50" height="50">
+              </p>
+            </li>
+            <li>
+              <p class="list_name">详情链接</p>
+              <p class="list_value">{{activity.detailUrl}}</p>
+            </li>
+            <li>
+              <p class="list_name">活动说明</p>
+              <p class="list_value">{{activity.remark}}</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

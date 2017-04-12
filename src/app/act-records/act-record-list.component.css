@@ -1,0 +1,401 @@
+.homepage{
+  background-color: #fafbfe;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.homepage_head{
+  width: 100%;
+  height: 78px;
+  /*background-color: #ffffff;*/
+  /*border: 1px solid #eef1f9;*/
+}
+.head_img{
+  float: left;
+  width: 145px;
+  height: 40px;
+  margin-top: 23px;
+  margin-left: 50px;
+}
+.head_img img{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.go_back{
+  float: right;
+  width: 72px;
+  height: 34px;
+  font-size: 18px;
+  line-height: 34px;
+  color: #8296ca;
+  padding-left: 13px;
+  margin-top: 22px;
+  margin-left: 12px;
+  border-left: 1px solid #eef1f9;
+  margin-right: 30px;
+}
+.account_center{
+  float: right;
+  width: 72px;
+  height: 34px;
+  font-size: 18px;
+  line-height: 34px;
+  color: #8296ca;
+  padding-left: 45px;
+  margin-top: 22px;
+  margin-left: 12px;
+  border-left: 1px solid #eef1f9;
+  position: relative;
+}
+.account_center span{
+  display: block;
+  position: absolute;
+  left: 13px;
+  top: 6px;
+  width: 25px;
+  height: 25px;
+  background: url("/assets/images/sprite.png") no-repeat;
+  background-position: 0 -276px;
+}
+
+.account_name_con{
+  width: 100%;
+  margin-top: -95px;
+  /*height: 100%;*/
+}
+.logo_list{
+  width: 840px;
+  margin: 0 auto;
+  margin-top: 95px;
+}
+.logo_list li{
+  float: left;
+  width: 248px;
+  height: 268px;
+  border: 1px solid #eef1f9;
+  border-radius: 3px;
+  background-color: #ffffff;
+  position: relative;
+  margin-right: 30px;
+  margin-top: 30px;
+}
+.logo_img{
+  display: block;
+  width: 90px;
+  height: 90px;
+  margin: 0 auto;
+  border-radius: 10px;
+  margin-top: 65px;
+}
+.logo_name{
+  font-size: 16px;
+  line-height: 15px;
+  color: #4988e8;
+  text-align: center;
+  margin-top: 20px;
+}
+.create_date{
+  font-size: 14px;
+  line-height: 15px;
+  color: #354285;
+  text-align: center;
+  margin-top: 8px;
+}
+.edit_icon{
+  display: block;
+  position: absolute;
+  right: 45px;
+  top: 10px;
+  width: 20px;
+  height: 20px;
+  background: url("/assets/images/sprite.png") no-repeat;
+  background-position: -80px -191px;
+}
+.delete_icon{
+  display: block;
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  width: 20px;
+  height: 20px;
+  background: url("/assets/images/sprite.png") no-repeat;
+  background-position: -38px -212px;
+}
+.add_img{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.create_app{
+  width: 380px;
+  margin: 0 auto;
+  height: 300px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  margin-top: 100px;
+}
+.delete_app{
+  width: 380px;
+  margin: 0 auto;
+  height: 200px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  margin-top: 100px;
+}
+.app_name{
+  width: 330px;
+  margin: 0 auto;
+  height: 30px;
+  margin-top: 32px;
+}
+.app_name p{
+  float: left;
+  width: 60px;
+  text-align: right;
+  font-size: 14px;
+  color: #354285;
+  line-height: 30px;
+  margin-right: 10px;
+}
+.app_name input{
+  display: block;
+  float: left;
+  width: 249px;
+  padding-left: 9px;
+  height: 28px;
+  border: 1px solid #eef1f9;
+  font-size: 14px;
+  background-color: #fafbfe;
+}
+.app_logo{
+  width: 350px;
+  margin: 0 auto;
+  height: 70px;
+  margin-top: 20px;
+}
+.app_logo_title{
+  float: left;
+  width: 70px;
+  text-align: right;
+  font-size: 14px;
+  color: #354285;
+  line-height: 70px;
+  margin-right: 10px;
+}
+.app_logo_img{
+  float: left;
+  width: 170px;
+  height: 70px;
+  background: url("/assets/images/logo_up.png");
+  margin-right: 20px;
+  position: relative;
+}
+.app_logo_img img{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.app_logo_img input{
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  opacity: 0;
+  z-index: 100;
+}
+.app_logo_btn{
+  float: left;
+  width: 70px;
+  height: 24px;
+  text-align: center;
+  font-size: 14px;
+  color: #ffffff;
+  line-height: 24px;
+  background-color: #4696e4;
+  margin-top: 20px;
+}
+.submit_btn{
+  width: 260px;
+  margin: 0 auto;
+  height: 30px;
+  margin-top: 30px;
+}
+.submit_btn button{
+  float: left;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 3px;
+}
+button.cancel_btn{
+  border: 1px solid #4696e4;
+  color: #4696e4;
+  background-color: #ffffff;
+}
+button.sure_btn{
+  color: #ffffff;
+  background-color: #4696e4;
+  margin-left: 50px;
+  border: 0px;
+}
+
+
+.wechat_pay{
+  width: 95.55%;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+.wechat_icon{
+  display: block;
+  float: left;
+  width: 130px;
+  height: 40px;
+  background: url("/assets/images/sprite.png") no-repeat;
+  background-position: 0 -116px;
+}
+.add_account{
+  float: right;
+  position: relative;
+  width: 100px;
+  height: 20px;
+  line-height: 20px;
+  padding-left: 30px;
+  font-size: 14px;
+  color: #4696e4;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.add_account span{
+  display: block;
+  width: 15px;
+  height: 15px;
+  background: url("/assets/images/sprite.png") no-repeat;
+  background-position: -63px -194px;
+  position: absolute;
+  left: 5px;
+  top: 2px;
+}
+.wechat_pay_table{
+  width: 95.55%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  border: 1px solid #eef1f9;
+  background-color: #fafbfe;
+  margin-top: 10px;
+}
+.wechat_pay_table tr{
+  width: 100%;
+  height: 45px;
+  line-height: 45px;
+  font-size: 16px;
+  color: #354285;
+  text-align: center;
+}
+.wechat_pay_table tr:nth-child(2n){
+  background-color: #f6f8fd;
+}
+td{
+  /*width: 20%;*/
+  height: 100%;
+}
+tr.first_line{
+  color: #4696e4;
+}
+.operate{
+  width: 210px;
+  margin: 0 auto;
+}
+.operate p{
+  float: left;
+  width: 70px;
+  text-align: right;
+  position: relative;
+  cursor: pointer;
+}
+.operate p span{
+  display: block;
+  position: absolute;
+  left: 10px;
+  top: 15px;
+}
+p.operate_look span{
+  width: 22px;
+  height: 15px;
+  background: url("/assets/images/sprite.png") no-repeat;
+  background-position: 0px -326px;
+}
+p.operate_edit span{
+  width: 15px;
+  height: 15px;
+  background: url("/assets/images/sprite.png") no-repeat;
+  background-position: -83px -193px;
+  left: 19px;
+}
+p.operate_delete span{
+  width: 15px;
+  height: 15px;
+  background: url("/assets/images/sprite.png") no-repeat;
+  background-position: -40px -215px;
+  left: 19px;
+}
+
+.logo_name {
+  position: relative;
+  top: -25px;
+  font-size: 16px;
+}
+.file_up {
+  display: inline-block;
+  position: relative;
+}
+.file_up input {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 170px;
+  height: 65px;
+  opacity: 0;
+  z-index: 10;
+}
+.file_up_img {
+  display: block;
+  float: left;
+  width: 170px;
+  height: 65px;
+  border-radius: 3px;
+}
+p.order_search_btn{
+  width: 67px;
+  height: 24px;
+  background-color: #4696e4;
+  color: #ffffff;
+  line-height: 24px;
+  text-align: center;
+  padding-left: 0px;
+  margin-top: 7px;
+  margin-left: 27px;
+  cursor: pointer;
+}
+.order_search{
+  margin-left: 150px;
+  height: 40px;
+  margin-top: 30px;
+}
+.order_search p{
+  float: left;
+  /*border: 1px solid #eef1f9;*/
+  /*background-color: #fafbfe;*/
+  /*line-height: 38px;*/
+  /*font-size: 14px;*/
+  /*color: #354285;*/
+  /*height: 38px;*/
+  /*padding-left: 10px;*/
+  margin-right: 17px;
+  border-radius: 3px;
+}

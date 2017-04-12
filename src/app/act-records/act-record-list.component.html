@@ -1,0 +1,47 @@
+<div class="epay">
+  <my-header></my-header>
+  <div class="epay_con clearfix">
+    <div class="epay_right">
+      <div class="pannel">
+        <p class="common_title">{{activity.title}}（{{activity.startTime | date: 'yyyy-MM-dd HH:mm:ss'}} -
+          {{activity.endTime | date: 'yyyy-MM-dd HH:mm:ss'}}）参与名单</p>
+        <p style="text-align: center; font-size: 15px; color: #354285;height: 60px;line-height: 60px;">参与者共{{info.JOIN + info.WIN + info.CASH}}人，中奖者{{info.WIN +
+          info.CASH}}人，已兑奖{{info.CASH}}人。</p>
+        <table class="wechat_pay_table">
+          <tbody>
+          <tr class="first_line">
+            <td>状态</td>
+            <td>报名ID</td>
+            <td>姓名</td>
+            <td>手机</td>
+            <td>操作</td>
+          </tr>
+          <tr
+            *ngFor="let act of actRecords | paginate: { id: 'pagination', itemsPerPage: pageSize, currentPage: pageNum, totalItems: total}">
+            <td>{{act.status | actRecordStatus }}</td>
+            <td>{{act.id}}</td>
+            <td>{{act.name}}</td>
+            <td>{{act.mobile}}</td>
+            <td>
+              <a *ngIf="act.status == 'JOIN'" href="javascript:void(0);" (click)="win(act)">中奖</a>
+              <a *ngIf="act.status == 'WIN'" href="javascript:void(0);" (click)="join(act)">取消中奖</a>
+              <a *ngIf="act.status == 'WIN'" href="javascript:void(0);" (click)="cash(act)">兑奖</a>
+              <a *ngIf="act.status == 'CASH'" href="javascript:void(0);" (click)="win(act)">取消兑奖</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="page_wrap">
+          <pagination-controls id="pagination"
+                               (pageChange)="search($event)"
+                               maxSize="9"
+                               directionLinks="true"
+                               autoHide="true"
+                               previousLabel="上一页"
+                               nextLabel="下一页">
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
