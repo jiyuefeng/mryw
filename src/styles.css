@@ -284,3 +284,7 @@ input:read-only, input:disabled {
   color: #4696e4;
   border: 1px solid #4696e4;
 }
+
+div .ng2-datetime-picker-wrapper {
+  display: inline-block;
+}
