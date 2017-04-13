@@ -6,6 +6,7 @@ import {ActivatedRoute} from "@angular/router";
 import {ActivityService} from "../activities/shared/activity.service";
 import {ActivityModel} from "../activities/shared/activity.model";
 import {ToastService} from "../shared/services/toast.service";
+import {MyErrorHandler} from "../shared/error/error-handler";
 
 
 @Component({
@@ -34,6 +35,7 @@ export class ActRecordListComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private activityService: ActivityService,
               private actRecordService: ActRecordService,
+              private errorHandler: MyErrorHandler,
               private toastService: ToastService) {
   }
 
@@ -46,7 +48,7 @@ export class ActRecordListComponent implements OnInit {
           this.getActRecordsInfo();
           this.getActRecords();
         },
-        error => {throw error});
+        error => {this.errorHandler.handleError(error)});
     });
   }
 
@@ -60,7 +62,7 @@ export class ActRecordListComponent implements OnInit {
         this.actRecords = data.data;
         this.loading = false;
       },
-      error => {throw error});
+      error => {this.errorHandler.handleError(error)});
   }
 
   search(currentPage: number) {
@@ -74,7 +76,7 @@ export class ActRecordListComponent implements OnInit {
       data => {
         this.info = data;
       },
-      error => {throw error});
+      error => {this.errorHandler.handleError(error)});
   }
 
   join(actRecord: ActRecordModel) {
@@ -88,7 +90,7 @@ export class ActRecordListComponent implements OnInit {
         this.actRecord = new ActRecordModel();
       },
       error => {
-        throw error
+        this.errorHandler.handleError(error)
       });
   }
 }
@@ -104,7 +106,7 @@ export class ActRecordListComponent implements OnInit {
           this.actRecord = new ActRecordModel();
         },
         error => {
-          throw error
+          this.errorHandler.handleError(error)
         });
     }
   }
@@ -120,7 +122,7 @@ export class ActRecordListComponent implements OnInit {
           this.actRecord = new ActRecordModel();
         },
         error => {
-          throw error
+          this.errorHandler.handleError(error)
         });
     }
   }

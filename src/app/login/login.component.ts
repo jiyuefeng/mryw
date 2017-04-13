@@ -5,6 +5,7 @@ import { Router }      from '@angular/router';
 import {LoginModel} from './shared';
 import {AuthService} from "../shared/services/auth/auth.service";
 import {ToastService} from "../shared/services/toast.service";
+import {MyErrorHandler} from "../shared/error/error-handler";
 
 @Component({
     templateUrl: './login.component.html',
@@ -16,6 +17,7 @@ export class LoginComponent {
 
     constructor(public authService: AuthService,
                 public router: Router,
+                private errorHandler: MyErrorHandler,
                 public toastService: ToastService) {
     }
 
@@ -29,7 +31,7 @@ export class LoginComponent {
                 let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/activities';
                 this.router.navigate([redirect]);
             }
-        }, error =>  {throw error});
+        }, error =>  {this.errorHandler.handleError(error)});
     }
 
     openIdLogin() {

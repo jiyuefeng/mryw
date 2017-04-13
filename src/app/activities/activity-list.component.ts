@@ -4,6 +4,7 @@ import {ActivityModel} from "./shared/activity.model";
 import {UploadService} from "../shared/services/upload.service";
 import {ToastService} from "../shared/services/toast.service";
 import {ActivatedRoute} from "@angular/router";
+import {MyErrorHandler} from "../shared/error/error-handler";
 
 @Component({
     templateUrl: './activity-list.component.html',
@@ -41,6 +42,7 @@ export class ActivityListComponent implements OnInit {
   constructor(private activityService: ActivityService,
               private uploadService: UploadService,
               private toastService: ToastService,
+              private errorHandler: MyErrorHandler,
               private route: ActivatedRoute) {
   }
 
@@ -58,7 +60,7 @@ export class ActivityListComponent implements OnInit {
         this.activities = data.data;
         this.loading = false;
       },
-      error => {throw error});
+      error => this.errorHandler.handleError(error));
   }
 
   search(currentPage: number) {
@@ -76,7 +78,7 @@ export class ActivityListComponent implements OnInit {
         this.activity = new ActivityModel();
         this.showAdd = false;
       },
-      error => {throw error});
+      error => {this.errorHandler.handleError(error)});
   }
 
 
@@ -89,7 +91,7 @@ export class ActivityListComponent implements OnInit {
         this.activity = new ActivityModel();
         this.showUpdate = false;
       },
-      error => {throw error});
+      error => {this.errorHandler.handleError(error)});
   }
 
   audit(activity: ActivityModel) {
@@ -103,7 +105,7 @@ export class ActivityListComponent implements OnInit {
           this.activity = new ActivityModel();
         },
         error => {
-          throw error
+          this.errorHandler.handleError(error)
         });
     }
   }
@@ -119,7 +121,7 @@ export class ActivityListComponent implements OnInit {
           this.activity = new ActivityModel();
         },
         error => {
-          throw error
+          this.errorHandler.handleError(error)
         });
     }
   }
@@ -131,7 +133,7 @@ export class ActivityListComponent implements OnInit {
     //     this.toastService.triggerToast('提示', this.message, 'success');
     //     wxconfig.status = !wxconfig.status;
     //   },
-    //   error => {throw error});
+    //   error => {this.errorHandler.handleError(error)});
   }
 
   openCreateDialog() {
@@ -175,7 +177,7 @@ export class ActivityListComponent implements OnInit {
     reader.onloadend = (e) => {
       this.uploadService.uploadPicture(reader.result).subscribe(
         url => this.activity.pictures[i] = url,
-        error => {throw error}
+        error => {this.errorHandler.handleError(error)}
       );
     };
     reader.readAsDataURL(file);

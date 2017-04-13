@@ -39,6 +39,7 @@ import {ActRecordModule} from "./act-records/act-record.module";
     AuthGuard,
     AuthService,
     UploadService,
+    MyErrorHandler,
     {provide: ErrorHandler, useClass: MyErrorHandler}
   ],
   bootstrap: [AppComponent]
