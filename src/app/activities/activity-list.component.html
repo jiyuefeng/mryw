@@ -91,7 +91,7 @@
                 <p class="nfd_list_name">物品简介</p>
                 <input type="text" name="intro" required [(ngModel)]="activity.intro" #intro="ngModel"
                        placeholder="">
-                <div [hidden]="intro.valid || intro.pristine">物品原价必填</div>
+                <div [hidden]="intro.valid || intro.pristine">物品简介必填</div>
               </li>
               <li [hidden]="picture1Mode != 1">
                 <p class="nfd_list_name">轮播图</p>
@@ -122,7 +122,7 @@
               </li>
               <li [hidden]="picture2Mode == 1">
                 <p class="nfd_list_name"></p>
-                <input type="text" name="picture2" required [(ngModel)]="activity.pictures[1]" #picture2="ngModel"
+                <input type="text" name="picture2" [(ngModel)]="activity.pictures[1]" #picture2="ngModel"
                        placeholder="">
                 <a href="javacript:void(0);" (click)="picture2Mode = 1"> 上传模式</a>
               </li>
@@ -138,7 +138,7 @@
               </li>
               <li [hidden]="picture3Mode == 1">
                 <p class="nfd_list_name"></p>
-                <input type="text" name="picture3" required [(ngModel)]="activity.pictures[2]" #picture3="ngModel"
+                <input type="text" name="picture3" [(ngModel)]="activity.pictures[2]" #picture3="ngModel"
                        placeholder="">
                 <a href="javacript:void(0);" (click)="picture3Mode = 1"> 上传模式</a>
               </li>
@@ -153,7 +153,7 @@
               </li>
               <li [hidden]="picture4Mode == 1">
                 <p class="nfd_list_name"></p>
-                <input type="text" name="picture4" required [(ngModel)]="activity.pictures[3]" #picture4="ngModel"
+                <input type="text" name="picture4" [(ngModel)]="activity.pictures[3]" #picture4="ngModel"
                        placeholder="">
                 <a href="javacript:void(0);" (click)="picture4Mode = 1"> 上传模式</a>
               </li>
@@ -169,7 +169,7 @@
               </li>
               <li [hidden]="picture5Mode == 1">
                 <p class="nfd_list_name"></p>
-                <input type="text" name="picture5" required [(ngModel)]="activity.pictures[4]" #picture5="ngModel"
+                <input type="text" name="picture5" [(ngModel)]="activity.pictures[4]" #picture5="ngModel"
                        placeholder="">
                 <a href="javacript:void(0);" (click)="picture5Mode = 1"> 上传模式</a>
               </li>
@@ -258,7 +258,7 @@
               </li>
               <li [hidden]="picture2Mode == 1">
                 <p class="nfd_list_name"></p>
-                <input type="text" name="picture2" required [(ngModel)]="activity.pictures[1]" #picture2="ngModel"
+                <input type="text" name="picture2" [(ngModel)]="activity.pictures[1]" #picture2="ngModel"
                        placeholder="">
                 <a href="javacript:void(0);" (click)="picture2Mode = 1"> 上传模式</a>
               </li>
@@ -274,7 +274,7 @@
               </li>
               <li [hidden]="picture3Mode == 1">
                 <p class="nfd_list_name"></p>
-                <input type="text" name="picture3" required [(ngModel)]="activity.pictures[2]" #picture3="ngModel"
+                <input type="text" name="picture3" [(ngModel)]="activity.pictures[2]" #picture3="ngModel"
                        placeholder="">
                 <a href="javacript:void(0);" (click)="picture3Mode = 1"> 上传模式</a>
               </li>
@@ -289,7 +289,7 @@
               </li>
               <li [hidden]="picture4Mode == 1">
                 <p class="nfd_list_name"></p>
-                <input type="text" name="picture4" required [(ngModel)]="activity.pictures[3]" #picture4="ngModel"
+                <input type="text" name="picture4" [(ngModel)]="activity.pictures[3]" #picture4="ngModel"
                        placeholder="">
                 <a href="javacript:void(0);" (click)="picture4Mode = 1"> 上传模式</a>
               </li>
@@ -305,7 +305,7 @@
               </li>
               <li [hidden]="picture5Mode == 1">
                 <p class="nfd_list_name"></p>
-                <input type="text" name="picture5" required [(ngModel)]="activity.pictures[4]" #picture5="ngModel"
+                <input type="text" name="picture5" [(ngModel)]="activity.pictures[4]" #picture5="ngModel"
                        placeholder="">
                 <a href="javacript:void(0);" (click)="picture5Mode = 1"> 上传模式</a>
               </li>
