@@ -23,6 +23,11 @@ export class ActRecordListComponent implements OnInit {
 
   info: any = {'JOIN':0, 'WIN': 0, 'CASH': 0};
 
+  searchParams: any = {
+    keyword: '',
+    status: ''
+  };
+
   total: number;
 
   activity: ActivityModel = new ActivityModel();
@@ -55,6 +60,8 @@ export class ActRecordListComponent implements OnInit {
   getActRecords() {
     this.actRecordService.getActRecords(
       this.activity.id,
+      this.searchParams.keyword,
+      this.searchParams.status,
       this.pageNum,
       this.pageSize).subscribe(
       data => {

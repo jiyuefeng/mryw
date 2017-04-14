@@ -7,6 +7,21 @@
           {{activity.endTime | date: 'yyyy-MM-dd HH:mm:ss'}}）参与名单</p>
         <p style="text-align: center; font-size: 15px; color: #354285;height: 60px;line-height: 60px;">参与者共{{info.JOIN + info.WIN + info.CASH}}人，中奖者{{info.WIN +
           info.CASH}}人，已兑奖{{info.CASH}}人。</p>
+
+        <div class="order_search clearfix">
+          <p>
+            <input type="text" [(ngModel)]="searchParams.keyword" placeholder="请输入姓名或者电话" size="80"/>
+          </p>
+          <p>
+            <select [(ngModel)]="searchParams.status">
+              <option value="">状态</option>
+              <option value="JOIN">参与</option>
+              <option value="WIN">中奖</option>
+              <option value="CASH">兑奖</option>
+            </select>
+          </p>
+          <p class="order_search_btn" (click)="search(1)">查询</p>
+        </div>
         <table class="wechat_pay_table">
           <tbody>
           <tr class="first_line">

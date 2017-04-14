@@ -15,8 +15,8 @@ export class ActRecordService extends BaseService {
     super();
   }
 
-  getActRecords(activityId: number, pageNum:number, pageSize:number): Observable<any> {
-    let url = `${this.url}/${activityId}/records?pageNum=${pageNum}&pageSize=${pageSize}`;
+  getActRecords(activityId: number, keyword: string, status: string, pageNum:number, pageSize:number): Observable<any> {
+    let url = `${this.url}/${activityId}/records?keyword=${keyword}&status=${status}&pageNum=${pageNum}&pageSize=${pageSize}`;
     let headers = this.getHeaders();
     let options = new RequestOptions({headers: headers});
     return this.http.get(url, options).map(this.extractData).catch(this.handleError);

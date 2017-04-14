@@ -10,7 +10,16 @@
         </div>
         <div class="order_search clearfix">
           <p>
-            <input type="text" [(ngModel)]="searchParams.keyword" placeholder="搜索活动标题" size="80"/>
+            <input type="text" [(ngModel)]="searchParams.keyword" placeholder="请输入活动标题" size="80"/>
+          </p>
+          <p>
+            <select [(ngModel)]="searchParams.status">
+              <option value="">状态</option>
+              <option value="NOT_AUDIT">未审核</option>
+              <option value="AUDITED">已审核</option>
+              <option value="ONLINE">已上线</option>
+              <option value="OFFLINE">已结束</option>
+            </select>
           </p>
           <p class="order_search_btn" (click)="search(1)">查询</p>
         </div>
@@ -39,7 +48,7 @@
               <a href="javascript:void(0);" (click)="openUpdateDialog(act)">修改</a>
               <a *ngIf="act.status == 'NOT_AUDIT'" href="javascript:void(0);" (click)="audit(act)">审核</a>
               <a *ngIf="act.status == 'AUDITED' || act.status == 'ONLINE'" href="javascript:void(0);" (click)="cancelAudit(act)">取消审核</a>
-              <a *ngIf="act.status == 'OFFLINE'" href="javascript:void(0);" routerLink="/activities/{{act.id}}/records">查看报名</a>
+              <a *ngIf="act.status == 'ONLINE' || act.status == 'OFFLINE'" href="javascript:void(0);" routerLink="/activities/{{act.id}}/records">查看报名</a>
             </td>
           </tr>
           </tbody>
@@ -60,6 +69,7 @@
       <div *ngIf="showAdd" class="notfull_dialog nfd_large">
         <form (ngSubmit)="createActivity()" #activityCreateForm="ngForm">
           <p class="nfd_title">发布活动</p>
+          <span class="fd-close" (click)="cancel()"></span>
           <div class="nfd_body">
             <p class="nfd_tip"></p>
             <ul class="nfd_list">
@@ -96,7 +106,7 @@
               <li [hidden]="picture1Mode != 1">
                 <p class="nfd_list_name">轮播图</p>
                 <div class="file_up clearfix">
-                  <img src="{{activity.pictures[0] ? activity.pictures[0]
+                  <img alt="点击图片上传" src="{{activity.pictures[0] ? activity.pictures[0]
                                         : '/assets/images/logo_up.png'}}" class="file_up_img">
                   <input type="file" class="file" accept="image/*" (change)="upload($event, 0)">
 
@@ -113,7 +123,7 @@
               <li [hidden]="picture2Mode != 1">
                 <p class="nfd_list_name"></p>
                 <div class="file_up clearfix">
-                  <img src="{{activity.pictures[1] ? activity.pictures[1]
+                  <img alt="点击图片上传" src="{{activity.pictures[1] ? activity.pictures[1]
                                         : '/assets/images/logo_up.png'}}" class="file_up_img">
                   <input type="file" class="file" accept="image/*" (change)="upload($event, 1)">
 
@@ -129,7 +139,7 @@
               <li [hidden]="picture3Mode != 1">
                 <p class="nfd_list_name"></p>
                 <div class="file_up clearfix">
-                  <img src="{{activity.pictures[2] ? activity.pictures[2]
+                  <img alt="点击图片上传" src="{{activity.pictures[2] ? activity.pictures[2]
                                         : '/assets/images/logo_up.png'}}" class="file_up_img">
                   <input type="file" class="file" accept="image/*" (change)="upload($event, 2)">
 
@@ -145,7 +155,7 @@
               <li [hidden]="picture4Mode != 1">
                 <p class="nfd_list_name"></p>
                 <div class="file_up clearfix">
-                  <img src="{{activity.pictures[3] ? activity.pictures[3]
+                  <img alt="点击图片上传" src="{{activity.pictures[3] ? activity.pictures[3]
                                         : '/assets/images/logo_up.png'}}" class="file_up_img">
                   <input type="file" class="file" accept="image/*" (change)="upload($event, 3)">
                   <a href="javacript:void(0);" (click)="picture4Mode = 2" > 地址模式</a>
@@ -160,7 +170,7 @@
               <li [hidden]="picture5Mode != 1">
                 <p class="nfd_list_name"></p>
                 <div class="file_up clearfix">
-                  <img src="{{activity.pictures[4] ? activity.pictures[4]
+                  <img alt="点击图片上传" src="{{activity.pictures[4] ? activity.pictures[4]
                                         : '/assets/images/logo_up.png'}}" class="file_up_img">
                   <input type="file" class="file" accept="image/*" (change)="upload($event, 4)">
 
@@ -196,6 +206,7 @@
       <div *ngIf="showUpdate" class="notfull_dialog nfd_large">
         <form (ngSubmit)="updateActivity()" #activityUpdateForm="ngForm">
           <p class="nfd_title">更新活动</p>
+          <span class="fd-close" (click)="cancel()"></span>
           <div class="nfd_body">
             <p class="nfd_tip"></p>
             <ul class="nfd_list">
@@ -232,7 +243,7 @@
               <li [hidden]="picture1Mode != 1">
                 <p class="nfd_list_name">轮播图</p>
                 <div class="file_up clearfix">
-                  <img src="{{activity.pictures[0] ? activity.pictures[0]
+                  <img alt="点击图片上传" src="{{activity.pictures[0] ? activity.pictures[0]
                                         : '/assets/images/logo_up.png'}}" class="file_up_img">
                   <input type="file" class="file" accept="image/*" (change)="upload($event, 0)">
 
@@ -249,7 +260,7 @@
               <li [hidden]="picture2Mode != 1">
                 <p class="nfd_list_name"></p>
                 <div class="file_up clearfix">
-                  <img src="{{activity.pictures[1] ? activity.pictures[1]
+                  <img alt="点击图片上传" src="{{activity.pictures[1] ? activity.pictures[1]
                                         : '/assets/images/logo_up.png'}}" class="file_up_img">
                   <input type="file" class="file" accept="image/*" (change)="upload($event, 1)">
 
@@ -265,7 +276,7 @@
               <li [hidden]="picture3Mode != 1">
                 <p class="nfd_list_name"></p>
                 <div class="file_up clearfix">
-                  <img src="{{activity.pictures[2] ? activity.pictures[2]
+                  <img alt="点击图片上传" src="{{activity.pictures[2] ? activity.pictures[2]
                                         : '/assets/images/logo_up.png'}}" class="file_up_img">
                   <input type="file" class="file" accept="image/*" (change)="upload($event, 2)">
 
@@ -281,7 +292,7 @@
               <li [hidden]="picture4Mode != 1">
                 <p class="nfd_list_name"></p>
                 <div class="file_up clearfix">
-                  <img src="{{activity.pictures[3] ? activity.pictures[3]
+                  <img alt="点击图片上传" src="{{activity.pictures[3] ? activity.pictures[3]
                                         : '/assets/images/logo_up.png'}}" class="file_up_img">
                   <input type="file" class="file" accept="image/*" (change)="upload($event, 3)">
                   <a href="javacript:void(0);" (click)="picture4Mode = 2" > 地址模式</a>
@@ -296,7 +307,7 @@
               <li [hidden]="picture5Mode != 1">
                 <p class="nfd_list_name"></p>
                 <div class="file_up clearfix">
-                  <img src="{{activity.pictures[4] ? activity.pictures[4]
+                  <img alt="点击图片上传" src="{{activity.pictures[4] ? activity.pictures[4]
                                         : '/assets/images/logo_up.png'}}" class="file_up_img">
                   <input type="file" class="file" accept="image/*" (change)="upload($event, 4)">
 
@@ -356,11 +367,11 @@
             <li>
               <p class="list_name">轮播图</p>
               <p class="list_value">
-                <img src="{{activity.pictures[0]}}" width="50" height="50">
-                <img src="{{activity.pictures[1]}}" width="50" height="50">
-                <img src="{{activity.pictures[2]}}" width="50" height="50">
-                <img src="{{activity.pictures[3]}}" width="50" height="50">
-                <img src="{{activity.pictures[4]}}" width="50" height="50">
+                <img alt="点击图片上传" src="{{activity.pictures[0]}}" width="50" height="50">
+                <img alt="点击图片上传" src="{{activity.pictures[1]}}" width="50" height="50">
+                <img alt="点击图片上传" src="{{activity.pictures[2]}}" width="50" height="50">
+                <img alt="点击图片上传" src="{{activity.pictures[3]}}" width="50" height="50">
+                <img alt="点击图片上传" src="{{activity.pictures[4]}}" width="50" height="50">
               </p>
             </li>
             <li>

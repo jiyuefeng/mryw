@@ -259,6 +259,7 @@ input:read-only, input:disabled {
 }
 
 .fill_btn{
+  cursor: pointer;
   display: inline-block;
   margin-right: 10px;
   margin-left: 10px;
@@ -271,6 +272,11 @@ input:read-only, input:disabled {
   background-color: #4696e4;
   border: 0px;
 }
+.fill_btn:disabled {
+  background-color: #80bcf7;
+  cursor: not-allowed;
+}
+
 .empty_btn{
   display: inline-block;
   background-color: #ffffff;

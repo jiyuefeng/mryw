@@ -24,7 +24,8 @@ export class ActivityListComponent implements OnInit {
 
   loading: boolean;
   searchParams: any = {
-    keyword: ''
+    keyword: '',
+    status: ''
   };
 
   showAdd: boolean = false;
@@ -53,6 +54,7 @@ export class ActivityListComponent implements OnInit {
   getActivities() {
     this.activityService.getActivities(
       this.searchParams.keyword,
+      this.searchParams.status,
       this.pageNum,
       this.pageSize).subscribe(
       data => {
@@ -141,8 +143,15 @@ export class ActivityListComponent implements OnInit {
   }
 
   openUpdateDialog(activity: ActivityModel) {
-    this.activity = activity;
-    this.showUpdate = true;
+    if (activity.status != 'NOT_AUDIT') {
+      if(confirm("修改后状态会变为未审核，确认要修改？")) {
+        this.activity = activity;
+        this.showUpdate = true;
+      }
+    } else {
+      this.activity = activity;
+      this.showUpdate = true;
+    }
   }
 
   openDetailDialog(activity: ActivityModel) {

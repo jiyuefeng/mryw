@@ -16,8 +16,8 @@ export class ActivityService extends BaseService {
     super();
   }
 
-  getActivities(keyword: string, pageNum:number, pageSize:number): Observable<any> {
-    let url = `${this.url}?keyword=${keyword}&pageNum=${pageNum}&pageSize=${pageSize}`;
+  getActivities(keyword: string, status: string,pageNum:number, pageSize:number): Observable<any> {
+    let url = `${this.url}?keyword=${keyword}&status=${status}&pageNum=${pageNum}&pageSize=${pageSize}`;
     let headers = this.getHeaders();
     let options = new RequestOptions({headers: headers});
     return this.http.get(url, options).map(this.extractData).catch(this.handleError);
