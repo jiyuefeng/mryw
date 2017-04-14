@@ -40,6 +40,8 @@ export class ActivityListComponent implements OnInit {
   picture4Mode: number = 2;
   picture5Mode: number = 2;
 
+  dateValid: boolean = true;
+
   constructor(private activityService: ActivityService,
               private uploadService: UploadService,
               private toastService: ToastService,
@@ -168,7 +170,21 @@ export class ActivityListComponent implements OnInit {
   cancel() {
     this.showAdd = false;
     this.showUpdate = false;
+    this.dateValid = true;
     this.activity = new ActivityModel();
+  }
+
+  checkDate(i: number) {
+    this.dateValid = true;
+    if (this.activity.startTime != null && this.activity.endTime != null
+        && this.activity.startTime >= this.activity.endTime) {
+      if (i == 1) {
+        this.activity.startTime = null;
+      } else {
+        this.activity.endTime = null;
+      }
+      this.dateValid = false;
+    }
   }
 
   upload($event: any, i:number) {
