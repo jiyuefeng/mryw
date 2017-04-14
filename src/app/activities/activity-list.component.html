@@ -47,7 +47,8 @@
             <td>
               <a href="javascript:void(0);" (click)="openUpdateDialog(act)">修改</a>
               <a *ngIf="act.status == 'NOT_AUDIT'" href="javascript:void(0);" (click)="audit(act)">审核</a>
-              <a *ngIf="act.status == 'AUDITED' || act.status == 'ONLINE'" href="javascript:void(0);" (click)="cancelAudit(act)">取消审核</a>
+              <a *ngIf="act.status == 'AUDITED'" href="javascript:void(0);" (click)="cancelAudit(act)">取消审核</a>
+              <a *ngIf="act.status == 'ONLINE'" href="javascript:void(0);" (click)="cancelAudit(act)">下线</a>
               <a *ngIf="act.status == 'ONLINE' || act.status == 'OFFLINE'" href="javascript:void(0);" routerLink="/activities/{{act.id}}/records">查看报名</a>
             </td>
           </tr>
@@ -367,11 +368,11 @@
             <li>
               <p class="list_name">轮播图</p>
               <p class="list_value">
-                <img alt="点击图片上传" src="{{activity.pictures[0]}}" width="50" height="50">
-                <img alt="点击图片上传" src="{{activity.pictures[1]}}" width="50" height="50">
-                <img alt="点击图片上传" src="{{activity.pictures[2]}}" width="50" height="50">
-                <img alt="点击图片上传" src="{{activity.pictures[3]}}" width="50" height="50">
-                <img alt="点击图片上传" src="{{activity.pictures[4]}}" width="50" height="50">
+                <img src="{{activity.pictures[0]}}" width="50" height="50">
+                <img src="{{activity.pictures[1]}}" width="50" height="50">
+                <img src="{{activity.pictures[2]}}" width="50" height="50">
+                <img src="{{activity.pictures[3]}}" width="50" height="50">
+                <img src="{{activity.pictures[4]}}" width="50" height="50">
               </p>
             </li>
             <li>
@@ -381,6 +382,38 @@
             <li>
               <p class="list_name">活动说明</p>
               <p class="list_value">{{activity.remark}}</p>
+            </li>
+            <li>
+              <p class="list_name">活动说明</p>
+              <p class="list_value">{{activity.remark}}</p>
+            </li>
+            <li>
+              <p class="list_name">状态</p>
+              <p class="list_value">{{activity.status | activityStatus}}</p>
+            </li>
+            <li>
+              <p class="list_name">创建时间</p>
+              <p class="list_value">{{activity.createTime}}</p>
+            </li>
+            <li>
+              <p class="list_name">创建人</p>
+              <p class="list_value">{{activity.creator}}</p>
+            </li>
+            <li>
+              <p class="list_name">最后修改时间</p>
+              <p class="list_value">{{activity.lastModifyTime}}</p>
+            </li>
+            <li>
+              <p class="list_name">最后修改人</p>
+              <p class="list_value">{{activity.lastModifier}}</p>
+            </li>
+            <li>
+              <p class="list_name">最后审核时间</p>
+              <p class="list_value">{{activity.lastAuditTime}}</p>
+            </li>
+            <li>
+              <p class="list_name">最后审核人</p>
+              <p class="list_value">{{activity.lastAuditor}}</p>
             </li>
           </ul>
         </div>

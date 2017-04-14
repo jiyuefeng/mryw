@@ -113,12 +113,13 @@ export class ActivityListComponent implements OnInit {
   }
 
   cancelAudit(activity: ActivityModel) {
-    if(confirm("确定取消审核？")) {
+    let cmsg = activity.status == 'AUDITED' ? '取消审核' : '下线';
+    if(confirm('确定' + cmsg +' ？')) {
       this.activity = activity;
       this.activityService.updateActivityStatus(this.activity.id, 'NOT_AUDIT').subscribe(
         data => {
           this.getActivities();
-          this.message = '取消审核成功';
+          this.message = cmsg + '成功';
           this.toastService.triggerToast('提示', this.message, 'success');
           this.activity = new ActivityModel();
         },
