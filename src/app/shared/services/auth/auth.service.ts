@@ -28,24 +28,24 @@ export class AuthService extends BaseService {
       }).catch(this.handleError);
   }
 
-  openIdLoginUrl(): Observable<string> {
+  openIdLoginUrl(redirectUrl: string): Observable<string> {
     let options = new RequestOptions({headers: this.getHeaders()});
 
-    return this.http.get(this.url + '/url', options)
+    return this.http.get(this.url + '/url?redirectUrl=' + redirectUrl, options)
       .map(this.extractData).map(data => {
-        return "";
+        return data.loginUrl;
       }).catch(this.handleError);
   }
 
-  openIdLogin(): Observable<UserModel> {
-    let body = null;
+  openIdLogin(openIdParams: any): Observable<UserModel> {
+    let body = JSON.stringify(openIdParams);
     let options = new RequestOptions({headers: this.getHeaders()});
 
     return this.http.post(this.url + '/openid', body, options)
       .map(this.extractData).map(data => {
-        this.setToken(data.authorization);
-        this.setCurrentUser(data.user);
-        return data.user;
+        this.setToken(data.token);
+        this.setCurrentUser(data.userInfo);
+        return data.userInfo;
       }).catch(this.handleError);
   }
 

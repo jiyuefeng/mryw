@@ -6,6 +6,7 @@ import {LoginModel} from './shared';
 import {AuthService} from "../shared/services/auth/auth.service";
 import {ToastService} from "../shared/services/toast.service";
 import {MyErrorHandler} from "../shared/error/error-handler";
+import {environment} from "../../environments/environment";
 
 @Component({
     templateUrl: './login.component.html',
@@ -35,7 +36,9 @@ export class LoginComponent {
     }
 
     openIdLogin() {
-
+        this.authService.openIdLoginUrl(environment.redirectUrl).subscribe(data => {
+            window.location.href = data;
+        }, error =>  {this.errorHandler.handleError(error)});
     }
 
 }
