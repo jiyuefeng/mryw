@@ -8,6 +8,9 @@
         <p style="text-align: center; font-size: 15px; color: #354285;height: 60px;line-height: 60px;">参与者共{{info.JOIN + info.WIN + info.CASH}}人，中奖者{{info.WIN +
           info.CASH}}人，已兑奖{{info.CASH}}人。</p>
 
+        <div class="wechat_pay" *ngIf="total > 0" >
+          <p class="export_ico" (click)="exportExcel()"><span></span>导出数据</p>
+        </div>
         <div class="order_search clearfix">
           <p>
             <input type="text" [(ngModel)]="searchParams.keyword" placeholder="请输入姓名或者电话" size="80"/>

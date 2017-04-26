@@ -37,4 +37,11 @@ export class ActRecordService extends BaseService {
     return this.http.put(url, body, options).map(this.extractData).catch(this.handleError);
   }
 
+  getExcelUrl(activityId: number): Observable<any> {
+    let url = `${this.url}/${activityId}/records/excel`;
+    let headers = this.getHeaders();
+    let options = new RequestOptions({headers: headers});
+    return this.http.get(url, options).map(this.extractData).catch(this.handleError);
+  }
+
 }

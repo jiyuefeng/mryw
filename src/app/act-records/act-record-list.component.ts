@@ -134,5 +134,14 @@ export class ActRecordListComponent implements OnInit {
     }
   }
 
+  exportExcel() {
+    this.actRecordService.getExcelUrl(this.activity.id).subscribe(
+      data => {
+        window.location.href = data.downloadUrl;
+      },
+      error => {
+        this.errorHandler.handleError(error)
+      });
+  }
 
 }

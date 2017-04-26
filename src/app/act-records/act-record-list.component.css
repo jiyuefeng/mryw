@@ -258,7 +258,7 @@ button.sure_btn{
   background: url("/assets/images/sprite.png") no-repeat;
   background-position: 0 -116px;
 }
-.add_account{
+.add_account, .export_ico {
   float: right;
   position: relative;
   width: 100px;
@@ -280,6 +280,18 @@ button.sure_btn{
   left: 5px;
   top: 2px;
 }
+
+.export_ico span{
+  display: block;
+  width: 15px;
+  height: 15px;
+  background: url("/assets/images/sprite.png") no-repeat;
+  background-position: -102px -195px;
+  position: absolute;
+  left: 5px;
+  top: 2px;
+}
+
 .wechat_pay_table{
   width: 95.55%;
   margin-left: auto;
