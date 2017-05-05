@@ -23,7 +23,7 @@ export class ActivityListComponent implements OnInit {
   pageSize: number = 10;
   total: number;
 
-  activity: ActivityModel = new ActivityModel();
+  activity: ActivityModel;
   activities: ActivityModel[];
 
   loading: boolean;
@@ -58,6 +58,7 @@ export class ActivityListComponent implements OnInit {
     this.getActivities();
     this.route.parent.params.subscribe(params => {
       this.cityCode = params['cityCode'];
+      this.activity = new ActivityModel(this.cityCode);
       this.getActivities();
     });
   }
@@ -89,7 +90,7 @@ export class ActivityListComponent implements OnInit {
         this.getActivities();
         this.message = '创建成功';
         this.toastService.triggerToast('提示', this.message, 'success');
-        this.activity = new ActivityModel();
+        this.activity = new ActivityModel(this.cityCode);
         this.showAdd = false;
       },
       error => {this.errorHandler.handleError(error)});
@@ -102,7 +103,7 @@ export class ActivityListComponent implements OnInit {
         this.getActivities();
         this.message = '更新成功';
         this.toastService.triggerToast('提示', this.message, 'success');
-        this.activity = new ActivityModel();
+        this.activity = new ActivityModel(this.cityCode);
         this.showUpdate = false;
       },
       error => {this.errorHandler.handleError(error)});
@@ -116,7 +117,7 @@ export class ActivityListComponent implements OnInit {
           this.getActivities();
           this.message = '审核成功';
           this.toastService.triggerToast('提示', this.message, 'success');
-          this.activity = new ActivityModel();
+          this.activity = new ActivityModel(this.cityCode);
         },
         error => {
           this.errorHandler.handleError(error)
@@ -133,7 +134,7 @@ export class ActivityListComponent implements OnInit {
           this.getActivities();
           this.message = cmsg + '成功';
           this.toastService.triggerToast('提示', this.message, 'success');
-          this.activity = new ActivityModel();
+          this.activity = new ActivityModel(this.cityCode);
         },
         error => {
           this.errorHandler.handleError(error)
@@ -163,7 +164,7 @@ export class ActivityListComponent implements OnInit {
   }
 
   closeDetailDialog() {
-    this.activity = new ActivityModel();
+    this.activity = new ActivityModel(this.cityCode);
     this.showDetail = false;
   }
 
@@ -171,7 +172,7 @@ export class ActivityListComponent implements OnInit {
     this.showAdd = false;
     this.showUpdate = false;
     this.dateValid = true;
-    this.activity = new ActivityModel();
+    this.activity = new ActivityModel(this.cityCode);
   }
 
   checkDate(i: number) {

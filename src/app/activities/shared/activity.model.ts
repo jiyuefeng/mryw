@@ -19,4 +19,8 @@ export class ActivityModel {
   public del: boolean;
 
   public recordCount:number = 0;
+
+  constructor(cityCode: string) {
+    this.cityCode = cityCode;
+}
 }
