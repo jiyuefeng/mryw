@@ -36,9 +36,7 @@ export class ActivityService extends BaseService {
 
     return this.http.post(this.getUrl(activity.cityCode), body, options)
       .map(this.extractData).map(data => {
-        let activity = new ActivityModel();
         activity.id = data.id;
-
         activity.createTime = new Date().getTime();
         return activity;
       })

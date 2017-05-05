@@ -23,7 +23,7 @@ export class ActivityListComponent implements OnInit {
   pageSize: number = 10;
   total: number;
 
-  activity: ActivityModel;
+  activity: ActivityModel = new ActivityModel(null);
   activities: ActivityModel[];
 
   loading: boolean;

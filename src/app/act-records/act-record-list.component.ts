@@ -30,7 +30,7 @@ export class ActRecordListComponent implements OnInit {
 
   total: number;
 
-  activity: ActivityModel = new ActivityModel();
+  activity: ActivityModel = new ActivityModel(null);
   actRecord: ActRecordModel = new ActRecordModel();
   actRecords: ActRecordModel[];
 
