@@ -29,7 +29,7 @@ export class LoginComponent {
             if (this.authService.isLoggedIn()) {
                 this.message = `登录成功，欢迎${data.username}`;
                 this.toastService.triggerToast('提示', this.message, 'success');
-                let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/activities';
+                let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/cities';
                 this.router.navigate([redirect]);
             }
         }, error =>  {this.errorHandler.handleError(error)});

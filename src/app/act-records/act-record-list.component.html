@@ -3,7 +3,7 @@
   <div class="epay_con clearfix">
     <div class="epay_right">
       <div class="pannel">
-        <p class="common_title">{{activity.title}}（{{activity.startTime | date: 'yyyy-MM-dd HH:mm:ss'}} -
+        <p class="common_title"><a routerLink="/cities/{{activity.cityCode}}/activities" >{{activity.title}}</a>（{{activity.startTime | date: 'yyyy-MM-dd HH:mm:ss'}} -
           {{activity.endTime | date: 'yyyy-MM-dd HH:mm:ss'}}）参与名单</p>
         <p style="text-align: center; font-size: 15px; color: #354285;height: 60px;line-height: 60px;">参与者共{{info.JOIN + info.WIN + info.CASH}}人，中奖者{{info.WIN +
           info.CASH}}人，已兑奖{{info.CASH}}人。</p>

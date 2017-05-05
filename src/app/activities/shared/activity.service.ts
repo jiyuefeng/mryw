@@ -10,21 +10,19 @@ import {environment} from "../../../environments/environment";
 @Injectable()
 export class ActivityService extends BaseService {
 
-  private url = environment.serverUrl + 'sh/activities';
-
   constructor(private http: Http) {
     super();
   }
 
-  getActivities(keyword: string, status: string,pageNum:number, pageSize:number): Observable<any> {
-    let url = `${this.url}?keyword=${keyword}&status=${status}&pageNum=${pageNum}&pageSize=${pageSize}`;
+  getActivities(cityCode: string, keyword: string, status: string,pageNum:number, pageSize:number): Observable<any> {
+    let url = this.getUrl(cityCode) + `?keyword=${keyword}&status=${status}&pageNum=${pageNum}&pageSize=${pageSize}`;
     let headers = this.getHeaders();
     let options = new RequestOptions({headers: headers});
     return this.http.get(url, options).map(this.extractData).catch(this.handleError);
   }
 
-  getActivity(activityId: number): Observable<ActivityModel> {
-    let url = `${this.url}/${activityId}`;
+  getActivity(cityCode: string, activityId: number): Observable<ActivityModel> {
+    let url = this.getUrl(cityCode) + `/${activityId}`;
     let headers = this.getHeaders();
     let options = new RequestOptions({headers: headers});
     return this.http.get(url, options).map(this.extractData).catch(this.handleError);
@@ -36,7 +34,7 @@ export class ActivityService extends BaseService {
     let headers = this.getHeaders();
     let options = new RequestOptions({headers: headers});
 
-    return this.http.post(this.url, body, options)
+    return this.http.post(this.getUrl(activity.cityCode), body, options)
       .map(this.extractData).map(data => {
         let activity = new ActivityModel();
         activity.id = data.id;
@@ -48,7 +46,7 @@ export class ActivityService extends BaseService {
   }
 
   updateActivity(activity: ActivityModel): Observable<any> {
-    let url = `${this.url}/${activity.id}`;
+    let url = this.getUrl(activity.cityCode) + `/${activity.id}`;
     let body = JSON.stringify(activity);
     let headers = this.getHeaders();
     let options = new RequestOptions({headers: headers});
@@ -56,19 +54,23 @@ export class ActivityService extends BaseService {
       .map(this.extractData).catch(this.handleError);
   }
 
-  deleteActivity(activityId: number): Observable<any> {
-    let url = `${this.url}/${activityId}`;
+  deleteActivity(cityCode: string, activityId: number): Observable<any> {
+    let url = this.getUrl(cityCode) + `/${activityId}`;
     let headers = this.getHeaders();
     let options = new RequestOptions({headers: headers});
     return this.http.delete(url, options).map(this.extractData).catch(this.handleError);
   }
 
-  updateActivityStatus(activityId: number, status: string): Observable<any> {
-    let url = `${this.url}/${activityId}/status`;
+  updateActivityStatus(cityCode: string, activityId: number, status: string): Observable<any> {
+    let url = this.getUrl(cityCode) + `/${activityId}/status`;
     let body = {"status": status};
     let headers = this.getHeaders();
     let options = new RequestOptions({headers: headers});
     return this.http.put(url, body, options).map(this.extractData).catch(this.handleError);
+  }
+
+  getUrl(cityCode: string) {
+    return `${environment.serverUrl}${cityCode}/activities`;
   }
 
 }

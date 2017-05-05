@@ -47,7 +47,7 @@ export class ActRecordListComponent implements OnInit {
   ngOnInit() {
     this.route.parent.params.subscribe(params => {
       //
-      this.activityService.getActivity(+params['id']).subscribe(
+      this.activityService.getActivity(params['cityCode'], +params['id']).subscribe(
         data => {
           this.activity = data;
           this.getActRecordsInfo();
@@ -59,7 +59,7 @@ export class ActRecordListComponent implements OnInit {
 
   getActRecords() {
     this.actRecordService.getActRecords(
-      this.activity.id,
+      this.activity,
       this.searchParams.keyword,
       this.searchParams.status,
       this.pageNum,
@@ -79,7 +79,7 @@ export class ActRecordListComponent implements OnInit {
 
   getActRecordsInfo() {
     this.actRecordService.getActRecordsInfo(
-      this.activity.id).subscribe(
+      this.activity).subscribe(
       data => {
         this.info = data;
       },
@@ -89,7 +89,7 @@ export class ActRecordListComponent implements OnInit {
   join(actRecord: ActRecordModel) {
   if(confirm("确定更改为参与？")) {
     this.actRecord = actRecord;
-    this.actRecordService.updateActRecordStatus(this.activity.id, this.actRecord.id, 'JOIN').subscribe(
+    this.actRecordService.updateActRecordStatus(this.activity, this.actRecord.id, 'JOIN').subscribe(
       data => {
         this.getActRecords();
         this.message = '更改为参与成功';
@@ -105,7 +105,7 @@ export class ActRecordListComponent implements OnInit {
   win(actRecord: ActRecordModel) {
     if(confirm("确定更改为中奖？")) {
       this.actRecord = actRecord;
-      this.actRecordService.updateActRecordStatus(this.activity.id, this.actRecord.id, 'WIN').subscribe(
+      this.actRecordService.updateActRecordStatus(this.activity, this.actRecord.id, 'WIN').subscribe(
         data => {
           this.getActRecords();
           this.message = '更改为中奖成功';
@@ -121,7 +121,7 @@ export class ActRecordListComponent implements OnInit {
   cash(actRecord: ActRecordModel) {
     if(confirm("确定更改为兑奖？")) {
       this.actRecord = actRecord;
-      this.actRecordService.updateActRecordStatus(this.activity.id, this.actRecord.id, 'CASH').subscribe(
+      this.actRecordService.updateActRecordStatus(this.activity, this.actRecord.id, 'CASH').subscribe(
         data => {
           this.getActRecords();
           this.message = '更改为兑奖成功';
@@ -135,7 +135,7 @@ export class ActRecordListComponent implements OnInit {
   }
 
   exportExcel() {
-    this.actRecordService.getExcelUrl(this.activity.id).subscribe(
+    this.actRecordService.getExcelUrl(this.activity).subscribe(
       data => {
         window.location.href = data.downloadUrl;
       },

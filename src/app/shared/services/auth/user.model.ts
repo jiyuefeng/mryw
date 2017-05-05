@@ -9,4 +9,6 @@ export class UserModel {
   public email: string;
   public creator: number;
   public createTime: number;
+
+  public userCities: any;
 }

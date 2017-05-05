@@ -49,7 +49,7 @@
               <a *ngIf="act.status == 'NOT_AUDIT'" href="javascript:void(0);" (click)="audit(act)">审核</a>
               <a *ngIf="act.status == 'AUDITED'" href="javascript:void(0);" (click)="cancelAudit(act)">取消审核</a>
               <a *ngIf="act.status == 'ONLINE'" href="javascript:void(0);" (click)="cancelAudit(act)">下线</a>
-              <a *ngIf="act.status == 'ONLINE' || act.status == 'OFFLINE'" href="javascript:void(0);" routerLink="/activities/{{act.id}}/records">查看报名</a>
+              <a *ngIf="act.status == 'ONLINE' || act.status == 'OFFLINE'" href="javascript:void(0);" routerLink="/cities/{{act.cityCode}}/activities/{{act.id}}/records">查看报名</a>
             </td>
           </tr>
           </tbody>

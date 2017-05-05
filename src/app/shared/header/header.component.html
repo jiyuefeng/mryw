@@ -1,16 +1,16 @@
 <div class="epay_head clearfix">
-    <a href="" routerLink="/" >
-        <p class="epay_logo">
-            <!--<img src="/assets/images/paycenter_logo.png">-->
-            每日一物后台
-        </p>
+  <a href="" routerLink="/">
+    <p class="epay_logo">
+      <!--<img src="/assets/images/paycenter_logo.png">-->
+      每日一物后台
+    </p>
+  </a>
+  <div class="epay_head_list clearfix">
+    <a href="javascript:void(0);" (click)="logout()">
+      <p class="go_back">退出登录</p>
     </a>
-    <div class="epay_head_list clearfix">
-        <a href="javascript:void(0);" (click)="logout()" >
-            <p class="go_back">退出登录</p>
-        </a>
-        <a href="javascript:void(0);" >
-            <p class="account_center"><span></span>欢迎您，{{currentUser.username}}</p>
-        </a>
-    </div>
+    <a href="javascript:void(0);">
+      <p class="account_center"><span></span>欢迎您，{{currentUser.username}}</p>
+    </a>
+  </div>
 </div>

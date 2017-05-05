@@ -1,0 +1,14 @@
+<div class="homepage">
+  <div class="homepage_head clearfix">
+    <my-header></my-header>
+  </div>
+  <div class="account_name_con">
+    <ul class="logo_list clearfix">
+      <li *ngFor="let userCity of userCities">
+        <a href="javascript:void(0);" routerLink="/cities/{{userCity.cityCode}}/activities">
+          <p class="logo_name">{{userCity.cityName}}</p>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

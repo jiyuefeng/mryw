@@ -1,10 +1,12 @@
+///<reference path="../../../node_modules/rxjs/add/operator/switchMap.d.ts"/>
 import {Component, OnInit} from "@angular/core";
 import {ActivityService} from "./shared/activity.service";
 import {ActivityModel} from "./shared/activity.model";
 import {UploadService} from "../shared/services/upload.service";
 import {ToastService} from "../shared/services/toast.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router, Params} from "@angular/router";
 import {MyErrorHandler} from "../shared/error/error-handler";
+import 'rxjs/add/operator/switchMap';
 
 @Component({
     templateUrl: './activity-list.component.html',
@@ -14,6 +16,8 @@ import {MyErrorHandler} from "../shared/error/error-handler";
 export class ActivityListComponent implements OnInit {
 
   message: string;
+
+  cityCode: string;
 
   pageNum: number = 1;
   pageSize: number = 10;
@@ -46,15 +50,21 @@ export class ActivityListComponent implements OnInit {
               private uploadService: UploadService,
               private toastService: ToastService,
               private errorHandler: MyErrorHandler,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
     this.getActivities();
+    this.route.parent.params.subscribe(params => {
+      this.cityCode = params['cityCode'];
+      this.getActivities();
+    });
   }
 
   getActivities() {
     this.activityService.getActivities(
+      this.cityCode,
       this.searchParams.keyword,
       this.searchParams.status,
       this.pageNum,
@@ -101,7 +111,7 @@ export class ActivityListComponent implements OnInit {
   audit(activity: ActivityModel) {
     if(confirm("确定审核？")) {
       this.activity = activity;
-      this.activityService.updateActivityStatus(this.activity.id, 'AUDITED').subscribe(
+      this.activityService.updateActivityStatus(this.cityCode, this.activity.id, 'AUDITED').subscribe(
         data => {
           this.getActivities();
           this.message = '审核成功';
@@ -118,7 +128,7 @@ export class ActivityListComponent implements OnInit {
     let cmsg = activity.status == 'AUDITED' ? '取消审核' : '下线';
     if(confirm('确定' + cmsg +' ？')) {
       this.activity = activity;
-      this.activityService.updateActivityStatus(this.activity.id, 'NOT_AUDIT').subscribe(
+      this.activityService.updateActivityStatus(this.cityCode, this.activity.id, 'NOT_AUDIT').subscribe(
         data => {
           this.getActivities();
           this.message = cmsg + '成功';
@@ -129,16 +139,6 @@ export class ActivityListComponent implements OnInit {
           this.errorHandler.handleError(error)
         });
     }
-  }
-
-  changeStatus(activity: ActivityModel) {
-    // this.activityService.changeStatus(wxconfig.id ,!wxconfig.status).subscribe(
-    //   data => {
-    //     this.message = !wxconfig.status ? '启用成功' : '禁用成功';
-    //     this.toastService.triggerToast('提示', this.message, 'success');
-    //     wxconfig.status = !wxconfig.status;
-    //   },
-    //   error => {this.errorHandler.handleError(error)});
   }
 
   openCreateDialog() {
