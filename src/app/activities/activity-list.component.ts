@@ -55,7 +55,6 @@ export class ActivityListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getActivities();
     this.route.parent.params.subscribe(params => {
       this.cityCode = params['cityCode'];
       this.activity = new ActivityModel(this.cityCode);
